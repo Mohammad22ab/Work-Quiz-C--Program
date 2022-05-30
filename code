@@ -1,0 +1,368 @@
+#include <iostream>
+#include<fstream>
+#include<time.h>
+#include<stdlib.h>
+#define MAX_NUM 4
+using namespace std;
+
+char guess; //Answer user inputs for question.
+int total;  //Total score.
+
+
+//4 possible answers, correct answer and question score.
+class Question{
+public:
+    void setValues(string, string, string, string, string, char, int);
+    void askQuestion();
+
+private:
+    string Question_Text;
+    string answer_1;
+    string answer_2;
+    string answer_3;
+    string answer_4;
+
+    char correct_answer;
+    int Question_Score;
+};
+
+void appointmet() // function for generating appointment, called after participants passes the quiz.
+{
+    int x;
+    x=rand() % 4;
+     switch(x)
+     {
+
+
+                      case 0:
+                      {
+                          cout<< "\n \t Your appointment will be Monday at 9:00 /t Be prepared :) ";
+                          break;
+                      }
+                      case 1:
+                      {
+                        cout<< "\n \t Your appointment will be Tuesday at 9:00 /t Be prepared :) ";
+                        break;
+                      }
+                      case 2:
+                      {
+                          cout<< "\n \t Your appointment will be Wednesday at 9:00 /t Be prepared :) ";
+                          break;
+                      }
+                      case 3:
+                      {
+                          cout<< "\n \t Your appointment will be Thursday at 9:00 /t Be prepared :) ";
+                          break;
+                      }
+                         default : cout << "Goodbye";
+     }
+}
+
+int main()
+{
+
+    string
+    command, //to choose what to do each time
+    name,username, password,bdate, //the ones that are found in the file
+    inName, inPassword; //the ones you are going to input from keyboard
+
+
+    while (1)
+    {
+        cout <<"Welcome to TEKNET Company - \n \n" <<"Type needed command { new - exit - login }\n"
+            ;
+        getline(cin, command);
+        //(for C strings)
+        //cin.get(command, 9);
+        //cin.get();
+        if (command=="exit") //(for C strings) if (!strcmp(command, "exit"))
+        {
+            return 1;
+        }
+        if (command=="new") //(for C strings) if (!strcmp(command, "register"))
+        {
+
+  ofstream g("user.txt"); // opening new file to store all new users data in it, in order to
+  if (!g.is_open()) //if it's not open, then there is no such file with the given name inside
+            //the folder (that is, in the folder where the .exe file is going to be)
+            {
+                cout<<"could not open file\n"; //just so that you know why it won't work if it doesn't
+                return 0;
+            }
+            cout<<"\n\n" //3 newlines
+                <<"What is your fulllname: \t ";
+            getline(cin, name); //Get the user's name and other details and save them in a file.
+            cout<<"\n Enter your Birth Date DD/MM/YYYY : \t";
+            getline(cin, bdate);
+            cout<<"\n Enter your Username : \t";
+            getline(cin, username);
+            cout<< "\n Enter your Password : \t ";
+            getline(cin, password); //Entering the Password from the beginning so not making more unneeded steps.
+          g << name;
+          g << bdate;
+          g << username;
+          g << password;
+          g.close();
+
+
+           //Ask if user wants to start quiz.
+   string respond;
+   cout << "\n Are you ready to start the quiz, " << name << "? Type Yes/No.\n";
+    cin >> respond;
+
+    //If user says yes, the quiz begins.
+    if (respond == "Yes" || respond == "yes") {
+        cout << "\n";
+        cout << "Good luck! \n";
+        cout << "\n";
+        cout << "Press enter to continue.";
+        cin.get();
+        cin.ignore();
+    }else{
+        cout << "\n";
+        cout << "Goodbye!\n";
+        cin.ignore();
+        cin.get();
+        return 0;
+    }//Else, quiz ends.
+
+    //Instances of the questions.
+    //10 questions total generated for this quiz.
+    Question q1;
+    Question q2;
+    Question q3;
+    Question q4;
+    Question q5;
+    Question q6;
+    Question q7;
+    Question q8;
+    Question q9;
+    Question q10;
+
+
+    //Calling the member function setValues.
+    //Question is set, 4 answer choices, the correct char answer, 4 points per question.
+    q1.setValues("1.What do you know about the company? ",
+        "Nothing",
+        "It is an Internet provider company",
+        "Customer service company",
+        "Commercial corporation",
+        'b',
+        10);
+
+    q2.setValues("2. Why do you want this job?",
+        "To earn money",
+        "To improve my skills and work hard",
+        "Because I am boring of staying home",
+        "To meet new people",
+        'b',
+        10);
+
+    q3.setValues("3. How many days could you work?",
+        "Just 3 days a week",
+        "20 days a month",
+        "Only at weekends",
+        "Any day",
+        'd',
+        4);
+
+    q4.setValues("4. You prefer to work in groups or alone?",
+        "alone",
+        "In a groups",
+        " ",
+        " ",
+        'b',
+        10);
+
+    q5.setValues("5. Which of them presents the company's goal?",
+        " Earn money ",
+        " Serve all clients and satisfy them without prejudice ",
+        " Get information about people ",
+        " Competing other companies ",
+        'b',
+        10);
+
+    q6.setValues("6. If a client called you and began cursing what you do?",
+        "Close the line immediately",
+        "Tell the boss",
+        "Keep quiet and listen to him and try to solve the problem",
+        "Start cursing at him back",
+        'c',
+        10);
+
+    q7.setValues("7. If a client wants to cancel his line?",
+        "Tell him not to",
+        "Go with him easily",
+        "Start convincing him and find some good deal to stay",
+        "Tell the boss about it",
+        'c',
+        10);
+
+    q8.setValues("8. If one of your family member called?",
+        "Talk with him and give him what he wants",
+        "not answering at all",
+        "I give the call to any other employee",
+        "I call him on cellphone",
+        'c',
+        10);
+
+    q9.setValues("9. Put the right word, I _________ MHA company",
+        "Belong to",
+        "Work at",
+        "know",
+        "Hate",
+        'a',
+        10);
+
+    q10.setValues("10. If another company offered you a job what you do?",
+        "I leave work immediately",
+        "I reject it",
+        "I accept it because I prefer to change company every period",
+        "Tell them until my current company i work at agree my resignation",
+        'd',
+        10);
+
+    //Calling askQuestion member function.
+    q1.askQuestion();
+    q2.askQuestion();
+    q3.askQuestion();
+    q4.askQuestion();
+    q5.askQuestion();
+    q6.askQuestion();
+    q7.askQuestion();
+    q8.askQuestion();
+    q9.askQuestion();
+    q10.askQuestion();
+
+
+    //Final score displayed when user finishes quiz.
+   cout << "Your Total Score is " << total << " out of 100!\n";
+    cout << "\n";
+
+
+
+        }
+        if (command=="login") //(for C strings) if (!strcmp(command, "login"))
+        {
+            //open file, and then put the name and password into the strings
+            ifstream f("user.txt"); //ifstream is the one for getting data from the file, and
+            //let us assume you've already created a file called "registration.txt"
+            if (!f.is_open()) //if it's not open, then there is no such file with the given name inside
+            //the folder (that is, in the folder where the .exe file is going to be)
+            {
+                cout<<"could not open file\n"; //just so that you know why it won't work if it doesn't
+                return 0;
+            }
+            getline(f, name, '\n'); //reads the user name from file f (which is using "registration.txt")
+            getline(f, password, '\n'); //reads the password from file f (which is using "registration.txt")
+            //also, if you tell the file to get you that text up until '\n', that's when you know it reads
+            //the whole line at most, and won't go any further
+            //and that is done by the 3rd parameter
+            f.close(); //you don't need it open now, since you have the name and password from the file
+
+            //login
+            while (1)
+            {
+                //you are going to input the name and password here
+                cout<<"\n\n\n"
+                    <<"Enter Username: ";
+                getline(cin, inName);
+                cout<<"Enter Password: ";
+                getline(cin, inPassword);
+                //or this, if you are working with C strings (second version of declaration)
+                //cin.get(inName, 31);
+                //cin.get();
+                //cin.get(inPassword, 31);
+                //cin.get();
+                //and the "cin.get()" after each input line is necessary, or else[...]
+                //no idea what's happening inside istream, but it's mandatory if you don't want your
+                //input to get stuck or worse
+                if (inName==username && inPassword==password)
+                {
+                    cout<<"Login Successful\n" //the '\n' is a character, so that's why I can add it
+                    //and it will automatically output a newline in console, alongside the string
+                        <<"Welcome, "
+                        <<inName << "\t \n your appointment for the interview will be at : \t \n ";
+                    appointmet();
+                    break; //just exit the while loop if you've entered the valid account
+                }
+                cout<<"incorrect name or password\n"; //if you haven't entered the valid account,
+                //then the while loop is not done yet. So that's why this output is without condition
+            }
+            //now do something about the account
+        }
+        cout<<"\n\n"; //give it 5 newlines
+    }
+
+
+    //User scores above a 59, user passes the quiz.
+    //Display message created with ASCII art generator.
+    //Link: http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+    if (total > 59) {
+        cout << "YOU PASSED!" << "\n";
+        cout << "\n";
+        cin.get();
+        cin.ignore();
+
+        return 0;
+    }
+    else
+    {
+        cout << "You failed... Sorry, better luck next time.\n";
+        cout << "\n";
+    }
+    cin.get();
+    cin.ignore();
+    return 0;
+}
+
+//Function called for question guidelines.
+void Question::setValues(string q, string a1, string a2, string a3, string a4, char ca, int pa)
+{
+    Question_Text = q;
+    answer_1 = a1;
+    answer_2 = a2;
+    answer_3 = a3;
+    answer_4 = a4;
+    correct_answer = ca;
+    Question_Score = pa;
+}
+//Format for possible answers displayed when program executes.
+void Question::askQuestion()
+{
+    cout << "\n";
+    cout << Question_Text << "\n";
+    cout << "a. " << answer_1 << "\n";
+    cout << "b. " << answer_2 << "\n";
+    cout << "c. " << answer_3 << "\n";
+    cout << "d. " << answer_4 << "\n";
+    cout << "\n";
+
+    //User enters their answer.
+    cout << "What is your answer?" << "\n";
+    cin >> guess;
+    //If their answer is correct, message is displayed and 4 points are added to their score.
+    if (guess == correct_answer) {
+        cout << "\n";
+        cout << "Correct!" << "\n";
+        total = total + Question_Score;
+       cout << "\n";
+        cout << "Press enter to continue." << "\n";
+        cin.get();
+        cin.ignore();
+    }
+    else //If their answer is incorrect, message is displayed, no points added.
+         //Correct answer displayed.
+    {
+        cout << "\n";
+        cout << "Sorry, you're wrong..." << "\n";
+        cout << "The correct answer is " << correct_answer << "." << "\n";
+        cout << "\n";
+        cout << "Press enter to continue." << "\n";
+        cin.get();
+        cin.ignore();
+    }
+
+
+}
+
